@@ -107,8 +107,13 @@ for i in range(1, 100):
 
 
 
+test_X = test_data[:, 1:].T
+test_Y = test_data[:, 0].T
+print('test X,Y', test_X.shape, test_Y.shape)
 
+test_forward = forward(test_X)['output']
+print('output shape:', test_forward.shape)
 
-
-
-
+wrong = np.sum(abs(test_Y - np.argmin(test_forward, axis = 0)) > 0)
+total = len(test_Y)
+print((total - wrong) / total)
