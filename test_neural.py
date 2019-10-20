@@ -15,11 +15,11 @@ train_data = np.loadtxt("mnist_train.csv",
 test_data = np.loadtxt("mnist_test.csv", 
                        delimiter=",") 
 
-train_X = train_data[:, 1:].T
-train_Y = train_data[:, 0].T
+train_X = train_data[:, 1:].T ## 784 * 60000
+train_Y = train_data[:, 0].T  ## 1 * 60000 digit labels
 print("Shapes: ", train_data.shape, test_data.shape)
 print("XY Shapes: ", train_X.shape, train_Y.shape)
-train_Y_vec = np.zeros((10, len(train_Y)))
+train_Y_vec = np.zeros((10, len(train_Y))) ## encode labels into vectors like [0,1,0,0,0,0,0,0,0,0]
 for i in range(len(train_Y)):
     train_Y_vec[int(train_Y[i]), i] = 1
 
@@ -87,7 +87,7 @@ def backward(forward_results, y):
     }
 
 rate = 0.01
-for i in range(1, 100):
+for i in range(1, 20000): ## increase iterations as needed
     result = forward(train_X)
     the_loss = loss(result, train_Y_vec)
     back = backward(result, train_Y_vec)
